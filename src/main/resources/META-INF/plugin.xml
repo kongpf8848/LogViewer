@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>com.github.kongpf8848.logviewer</id>
+    <name>LogViewer</name>
+    <version>0.1</version>
+    <vendor email="kongpf8848@gmail.com" url="https://github.com/kongpf8848">kongpf8848</vendor>
+
+    <description><![CDATA[
+   IDEA,Android Studio plugin for viewing long log text on tool window.
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="LogViewer" anchor="right" factoryClass="com.github.kongpf8848.logviewer.LogViewerToolWindow" />
+    </extensions>
+
+    <actions>
+
+    </actions>
+</idea-plugin>
