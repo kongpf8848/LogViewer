@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-public class LogViewerToolWindow implements ToolWindowFactory, LogCallback {
+public class LogViewerToolWindow implements ToolWindowFactory, LogPrinter {
 
     private JPanel toolWindowContent;
     private JButton startServerButton;
@@ -18,12 +18,7 @@ public class LogViewerToolWindow implements ToolWindowFactory, LogCallback {
 
     public LogViewerToolWindow(){
         startServerButton.addActionListener(e -> {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    LogServer.startServer(LogViewerToolWindow.this);
-                }
-            }).start();
+            new Thread(() -> LogServer.startServer(LogViewerToolWindow.this)).start();
         });
     }
     private void createUIComponents() {
@@ -31,16 +26,12 @@ public class LogViewerToolWindow implements ToolWindowFactory, LogCallback {
     }
 
     @Override
-    public void printLog(String text) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                logTextArea.append(text);
-                logTextArea.append("\n");
-                logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
-                logTextArea.paintImmediately(logTextArea.getBounds());
-
-            }
+    public void log(String msg) {
+        SwingUtilities.invokeLater(() -> {
+            logTextArea.append(msg);
+            logTextArea.append("\n");
+            logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+            logTextArea.paintImmediately(logTextArea.getBounds());
         });
 
     }

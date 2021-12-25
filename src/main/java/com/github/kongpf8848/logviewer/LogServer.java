@@ -10,19 +10,19 @@ public class LogServer {
 
     public static int PORT = 5036;
 
-    public static void startServer(LogCallback callback) {
+    public static void startServer(LogPrinter callback) {
         try {
             ServerSocket server = new ServerSocket(PORT);
-            callback.printLog("waiting for device connect ");
+            callback.log("listening,port:"+PORT+",waiting for device connect......");
             while (true) {
                 try {
                     Socket client = server.accept();
-                    callback.printLog("client:" + client.getInetAddress() + ":" + client.getPort() + " is connected");
+                    callback.log("client:" + client.getInetAddress() + "/" + client.getPort() + " is connected");
                     try {
                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         String line = "";
                         while ((line = bufferedReader.readLine()) != null) {
-                            callback.printLog(line);
+                            callback.log(line);
                         }
                         client.close();
                     } catch (IOException e) {
